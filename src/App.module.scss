@@ -1,0 +1,13 @@
+.appWrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  //max-width: 100vw;
+  background-color: #242424;
+  color: white;
+}
+
+.columnsWrapper {
+  display: flex;
+  max-height: calc(100vh - 300px);
+}
