@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 export default function AddProducts({addProduct}) {
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({nazwa: '', kategoria: '', produktSpozywczy: false});
     const [errors, setErrors] = useState({});
 
     const setField = (field, value) => {

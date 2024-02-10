@@ -48,13 +48,20 @@ export default function App() {
     }, [filters, products]);
 
     const addProduct = (form) => {
-        const newProduct = {
-            nazwa: form.nazwa,
-            kategoria: form.kategoria,
-            produktSpozywczy: form.produktSpozywczy
+        if (!products.find(product => product.nazwa === form.nazwa)) {
+            const newProduct = {
+                nazwa: form.nazwa,
+                kategoria: form.kategoria,
+                produktSpozywczy: form.produktSpozywczy
+            }
+            setProducts(prevProducts => {
+                const updatedProducts = [...prevProducts, newProduct];
+                localStorage.setItem('products', JSON.stringify(updatedProducts));
+                return updatedProducts;
+            });
+        } else {
+            alert("Product with name '" + form.nazwa + "' already exists");
         }
-        setProducts(prevProducts => [...prevProducts, newProduct]);
-        localStorage.setItem('products', JSON.stringify([...products, newProduct]));
     }
 
     const addToShoppingList = (selectedProduct) => {
