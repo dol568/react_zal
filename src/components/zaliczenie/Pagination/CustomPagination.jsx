@@ -1,16 +1,17 @@
+import PropTypes from "prop-types";
 import {useEffect} from "react";
 import {Pagination} from "react-bootstrap";
 
-const CustomPagination = ({
+export default function CustomPagination({
                               itemsCount,
                               itemsPerPage,
                               currentPage,
                               setCurrentPage,
-                              alwaysShown = true
-                          }) => {
+                              alwaysShown = false
+                          }) {
 
     const pagesCount = Math.ceil(itemsCount / itemsPerPage);
-    const isPaginationShown = alwaysShown ? true : pagesCount > 1;
+    const isPaginationShown = alwaysShown ? true : pagesCount > 0;
     const isCurrentPageFirst = currentPage === 1;
     const isCurrentPageLast = currentPage === pagesCount;
 
@@ -94,4 +95,10 @@ const CustomPagination = ({
     );
 };
 
-export default CustomPagination;
+CustomPagination.propTypes = {
+    itemsCount: PropTypes.number,
+    itemsPerPage: PropTypes.number,
+    currentPage: PropTypes.number,
+    setCurrentPage: PropTypes.func,
+    alwaysShown: PropTypes.bool
+};

@@ -1,10 +1,11 @@
 import {useState} from "react";
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-const AddProducts = ({addProduct}) => {
+export default function AddProducts({addProduct}) {
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
 
@@ -19,8 +20,8 @@ const AddProducts = ({addProduct}) => {
     const validateForm = () => {
         const {nazwa, kategoria} = form;
         const newErrors = {};
-        if (!nazwa || nazwa === '') newErrors.nazwa = 'Podaj nazwe produktu';
-        if (!kategoria || kategoria === '') newErrors.kategoria = 'Podaj kategorie';
+        if (!nazwa || nazwa.trim() === '') newErrors.nazwa = 'Podaj nazwe produktu';
+        if (!kategoria || kategoria.trim() === '') newErrors.kategoria = 'Podaj kategorie';
         return newErrors;
     }
 
@@ -80,8 +81,7 @@ const AddProducts = ({addProduct}) => {
                         onClick={handleAddProduct}
                         type="submit"
                         style={{minWidth: '200px'}}
-                    >
-                        Dodaj
+                    >Dodaj
                     </Button>
                 </Form.Group>
             </Row>
@@ -89,4 +89,6 @@ const AddProducts = ({addProduct}) => {
     );
 }
 
-export default AddProducts;
+AddProducts.propTypes = {
+    addProduct: PropTypes.func
+};

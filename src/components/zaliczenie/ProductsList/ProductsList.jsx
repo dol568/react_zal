@@ -1,8 +1,9 @@
 import commonColumnsStyles from "../../../common/styles/Columns.module.scss";
+import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import {ListGroup} from "react-bootstrap";
 
-const ProductsList = ({addToShoppingList, filteredProducts}) => {
+export default function ProductsList({addToShoppingList, filteredProducts}) {
     const [sortedProducts, setSortedProducts] = useState([]);
     const [sortOrder, setSortOrder] = useState('asc');
     const [activeIndex, setActiveIndex] = useState(null);
@@ -65,4 +66,7 @@ const ProductsList = ({addToShoppingList, filteredProducts}) => {
     );
 };
 
-export default ProductsList;
+ProductsList.propTypes = {
+    addToShoppingList: PropTypes.func,
+    filteredProducts: PropTypes.array
+};

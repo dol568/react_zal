@@ -1,30 +1,30 @@
+import PropTypes from "prop-types";
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-const ProductsFilters = ({
-                             products,
-                             resetList,
-                             nameFilter,
-                             setNameFilter,
-                             categoryFilter,
-                             setCategoryFilter,
-                             isFoodOnly,
-                             setIsFoodOnly
-                         }) => {
+export default function ProductsFilters({products, resetList, filters, setFilters}) {
 
     const resetFilterParams = () => {
-        setNameFilter('');
-        setCategoryFilter('');
-        setIsFoodOnly(false);
+        setFilters({
+            nazwa: '',
+            kategoria: '',
+            produktSpozywczy: false
+        });
     };
 
-    const onNameFilterChange = (e) => setNameFilter(e.target.value);
+    const onNameFilterChange = (e) => {
+        setFilters({...filters, nazwa: e.target.value});
+    };
 
-    const onCategoryFilterChange = (e) => setCategoryFilter(e.target.value);
+    const onCategoryFilterChange = (e) => {
+        setFilters({...filters, kategoria: e.target.value});
+    };
 
-    const onFoodOnlyChange = (e) => setIsFoodOnly(e.target.checked);
+    const onFoodOnlyChange = (e) => {
+        setFilters({...filters, produktSpozywczy: e.target.checked});
+    };
 
     const uniqueCategories = products.reduce((unique, product) => {
         if (!unique.includes(product.kategoria))
@@ -41,28 +41,26 @@ const ProductsFilters = ({
                 <Form.Group as={Col} className="m-auto">
                     <Form.Control
                         type="text"
-                        value={nameFilter}
+                        value={filters.nazwa}
                         placeholder="Filter by name..."
                         onChange={onNameFilterChange}
                     />
                 </Form.Group>
                 <Form.Group as={Col} className="m-auto">
                     <Form.Select
-                        value={categoryFilter}
+                        value={filters.kategoria}
                         onChange={onCategoryFilterChange}
                     >
                         <option value="">All Categories</option>
                         {uniqueCategories.map((category, index) => (
-                            <option key={index} value={category}>
-                                {category}
-                            </option>
+                            <option key={index} value={category}>{category}</option>
                         ))}
                     </Form.Select>
                 </Form.Group>
                 <Form.Group as={Col} className="my-auto">
                     <Form.Check
                         type="checkbox"
-                        checked={isFoodOnly}
+                        checked={filters.produktSpozywczy}
                         onChange={onFoodOnlyChange}
                         label="Tylko produkty spożywcze"
                     />
@@ -72,8 +70,7 @@ const ProductsFilters = ({
                         className="my-auto mx-3"
                         onClick={resetFilterParams}
                         style={{minWidth: '200px'}}
-                    >
-                        Reset Filters
+                    >Reset Filters
                     </Button>
                 </Form.Group>
                 <Form.Group as={Col} className="my-auto">
@@ -81,8 +78,7 @@ const ProductsFilters = ({
                         className="my-auto"
                         onClick={resetList}
                         style={{minWidth: '200px'}}
-                    >
-                        Reset List
+                    >Reset List
                     </Button>
                 </Form.Group>
             </Row>
@@ -90,4 +86,9 @@ const ProductsFilters = ({
     );
 }
 
-export default ProductsFilters;
+ProductsFilters.propTypes = {
+    products: PropTypes.array,
+    resetList: PropTypes.func,
+    filters: PropTypes.object,
+    setFilters: PropTypes.func
+};
